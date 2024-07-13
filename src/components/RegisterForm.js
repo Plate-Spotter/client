@@ -1,12 +1,16 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "./RegisterForm.css"
+import { useNavigate } from "react-router-dom"
 
 function RegisterForm() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isRegistered, setIsRegistered] = useState(false);
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -23,9 +27,21 @@ function RegisterForm() {
         password_confirmation: confirmPassword
       })
     })
-    .then(response => response.json())
-    .then(data => console.log(data))
+    .then(response => {
+      if (response.status == 201) {
+        const data = response.json()
+        setIsRegistered(true)
+        setUserId(data.id)
+      }
+    })
+    .catch(error => console.log(error))
   }
+
+  useEffect(() => {
+    if (isRegistered) {
+      navigate("/profile", { state: { userId: userId } });
+    }
+  }, [isRegistered])
 
   return(
     <div className="register-form-container">
