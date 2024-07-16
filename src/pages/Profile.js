@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Profile.css";
+import NavBar from "../components/NavBar";
 
 function Profile() {
   const location = useLocation();
@@ -29,6 +30,7 @@ function Profile() {
       <div></div>
     ) : (
       <div className="profile">
+        <NavBar />
         <h2>Yo Bitch</h2>
         <p>{user.username}'s profile page</p>
         <button>Start New Game</button>
