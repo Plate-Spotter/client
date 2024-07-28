@@ -1,23 +1,35 @@
 import React from "react";
 import "./Welcome.css";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { getUser } from "../api/UsersApi";
+import NavBar from "../components/NavBar";
+
 
 function Welcome() {
+  const [user, setUser] = useState([]);
+
+  const fetchUserInfo = async () => {
+    try {
+      const userInfo = await getUser();
+      setUser(userInfo)
+    } catch (error) {
+      console.error("Error fetching User Info:", error);
+    }
+  };
+
   useEffect(() => {
-    fetch("https://03f6ed0f-78cd-482b-ac54-e1ad190432be.mock.pstmn.io/users/1", {
-      headers: {
-        Accept: 'application/json',
-        'Content-Type': 'application/json'}
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-  }, [])
+    fetchUserInfo ()
+  }, []);
+
   return (
     <>
       <div className="Welcome">
         <h3>Welcome to the Plate Spottah Game!</h3>
         <Link to="/register">Sign Up</Link>
+
+        <NavBar />
+
       </div>
     </>
   );

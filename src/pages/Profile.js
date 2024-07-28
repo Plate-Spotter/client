@@ -2,40 +2,47 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Profile.css";
 import NavBar from "../components/NavBar";
+import { getUserById } from "../api/UsersApi";
 
 function Profile() {
-  const location = useLocation();
-  const userId = location.state.userId;
+  const [userId, setUserId] = useState();
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (userId) {
-      fetch(`https://03f6ed0f-78cd-482b-ac54-e1ad190432be.mock.pstmn.io/users/${userId}`)
-        .then(response => {
-          if (response.ok) {
-            return response.json();
-          } else {
-            throw new Error('Network response was not ok.');
-          }
-        })
-        .then(data => {
-          setUser(data);
-        })
-        .catch(error => console.error('There was a problem with the fetch operation:', error));
+    if (localStorage.getItem("userId")) {
+      setUserId(localStorage.getItem('userId'));
+      // console.log(localStorage.getItem('userId'));
     }
+  }, [])
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        if (userId) {
+          const userData = await getUserById(userId);
+          setUser(userData);
+        }
+      } catch (error) {
+        console.log("Issue is in fetchUser", error);
+      }
+    };
+
+    fetchUser();
   }, [userId]);
 
-  return (
-    user == null ? (
-      <div></div>
-    ) : (
-      <div className="profile">
-        <NavBar />
-        <h2>Yo Bitch</h2>
-        <p>{user.username}'s profile page</p>
-        <button>Start New Game</button>
-      </div>
-    )
+  if (!user) {
+    return <div>No User...?!</div>;
+  }
+
+  return user == null ? (
+    <div></div>
+  ) : (
+    <div className="profile">
+      <NavBar />
+      <h2>Yo Bitch</h2>
+      <p>{user.username}'s profile page</p>
+      <button>Start New Game</button>
+    </div>
   );
 }
 

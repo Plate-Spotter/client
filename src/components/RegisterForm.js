@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./RegisterForm.css";
 import { useNavigate } from "react-router-dom";
+import { registerUser } from "../api/UsersApi";
 
 function RegisterForm() {
   const [username, setUsername] = useState("");
@@ -16,28 +17,9 @@ function RegisterForm() {
     event.preventDefault();
     console.log("submitting:", username, email, password);
     try {
-      const response = await fetch(
-        "https://03f6ed0f-78cd-482b-ac54-e1ad190432be.mock.pstmn.io/users",
-        {
-          method: "POST",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            username: username,
-            email: email,
-            password: password,
-            password_confirmation: confirmPassword,
-          }),
-        }
-      );
-
-      if (response.status === 201) {
-        const data = await response.json();
-        setIsRegistered(true);
-        setUserId(data.id);
-      }
+      const userData = await registerUser(username, email, password, confirmPassword);
+      setIsRegistered(true);
+      setUserId(userData.id);
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +27,8 @@ function RegisterForm() {
 
   useEffect(() => {
     if (isRegistered && userId) {
-      navigate("/profile", { state: { userId: userId } });
+      localStorage.setItem("userId", userId)
+      navigate("/profile");
     }
   }, [isRegistered, userId, navigate]);
 
