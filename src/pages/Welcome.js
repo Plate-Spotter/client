@@ -27,6 +27,7 @@ function Welcome() {
       <div className="Welcome">
         <h3>Welcome to the Plate Spottah Game!</h3>
         <Link to="/register">Sign Up</Link>
+        <Link to="/login">Log In</Link>
 
         <NavBar />
 

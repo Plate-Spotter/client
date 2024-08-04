@@ -2,7 +2,7 @@ const API_URL = process.env.REACT_APP_API_URL;
 
 export const getUser = async () => {
   console.log("inside get user");
-  console.log("API_URL", API_URL)
+  console.log("API_URL", API_URL);
   try {
     const response = await fetch(`${API_URL}/users/1`, {
       headers: {
@@ -15,7 +15,7 @@ export const getUser = async () => {
     }
 
     const data = await response.json();
-    console.log("data is here", data)
+    console.log("data is here", data);
     return data;
   } catch (error) {
     console.error("Error in getUser:", error);
@@ -24,29 +24,34 @@ export const getUser = async () => {
 };
 
 export const getUserById = async (userId) => {
-  console.log("inside getUserById")
-  console.log("userId", userId)
+  console.log("inside getUserById");
+  console.log("userId", userId);
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
+      },
     });
     if (!response.ok) {
-      throw new Error(`Failed to fetch user (${response.status})`)
+      throw new Error(`Failed to fetch user (${response.status})`);
     }
 
     const data = await response.json();
-    console.log("Profile data is here donkey", data)
+    console.log("Profile data is here donkey", data);
     return data;
   } catch (error) {
     console.error("Error in getUserById", error);
-    throw error
+    throw error;
   }
-}
+};
 
-export const registerUser = async (username, email, password, confirmPassword) => {
+export const registerUser = async (
+  username,
+  email,
+  password,
+  confirmPassword
+) => {
   try {
     const response = await fetch(`${API_URL}/users`, {
       method: "POST",
@@ -66,10 +71,58 @@ export const registerUser = async (username, email, password, confirmPassword) =
       const data = await response.json();
       return data;
     } else {
-      throw new Error(`failed to register user (${response.status})`)
+      throw new Error(`failed to register user (${response.status})`);
     }
-    } catch (error) {
-      console.error("error in registerUser:", error);
-      throw error;
+  } catch (error) {
+    console.error("error in registerUser:", error);
+    throw error;
+  }
+};
+
+export const loginUser = async (usernameOrEmail, password) => {
+  try {
+    const response = await fetch(`${API_URL}/login`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        username_or_email: usernameOrEmail,
+        password: password,
+      }),
+    });
+
+    if (response.status === 201) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error(`failed to log in user (${response.status})`);
     }
-  };
+  } catch (error) {
+    console.error("error in loginUser:", error);
+    throw error;
+  }
+};
+
+export const getGameSessionsById = async (userId) => {
+  try {
+    const response = await fetch(`${API_URL}/users/${userId}/games`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    });
+
+    if (response.status === 200) {
+      const data = await response.json();
+      return data.games;
+    } else {
+      throw new Error(`failed to log in user (${response.status})`);
+    }
+  } catch (error) {
+    console.error("error in getGameSessionsById:", error);
+    throw error;
+  }
+};
