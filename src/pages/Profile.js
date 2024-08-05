@@ -4,9 +4,10 @@ import "./Profile.css";
 import NavBar from "../components/NavBar";
 import { getUserById, getGameSessionsById, getUser } from "../api/UsersApi";
 import { Link } from "react-router-dom";
+import GameSession from "../components/GameSession";
 
 function Profile() {
-  const [userId, setUserId] = useState(localStorage.getItem('userId') || '');
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
   const [user, setUser] = useState(null);
   const [gameSessions, setGameSessions] = useState([]);
 
@@ -16,10 +17,10 @@ function Profile() {
         try {
           const [userData, userGameSessions] = await Promise.all([
             getUserById(userId),
-            getGameSessionsById(userId)
+            getGameSessionsById(userId),
           ]);
           setUser(userData);
-          setGameSessions(userGameSessions)
+          setGameSessions(userGameSessions);
         } catch (error) {
           console.log("Issue fetching user or game sessions", error);
         }
@@ -33,29 +34,21 @@ function Profile() {
     return <div>No User...?!</div>;
   }
 
-  useEffect(() => {
-    const fetchGameSessions = async() => {
-      try {
-        if (userId) {
-          const userGameSessions = await getGameSessionsById(userId);
-          setGameSessions(userGameSessions)
-        }
-      } catch (error) {
-        console.log("Issue in fetchGameSessions", error)
-      }
-    };
-
-    fetchGameSessions();
-  }, [userId]);
-
   return user == null ? (
     <div></div>
   ) : (
     <div className="profile">
       <NavBar />
       <h2>Yo Bitch</h2>
-      <p>{user.username}'s profile page</p>
-      <Link to="/start"><button>Start New Game</button></Link>
+      <h3>{user.username}'s profile page</h3>
+      <Link to="/start">
+        <button className="button">Start New Game</button>
+      </Link>
+      {
+        gameSessions.map((session) => (
+          <GameSession key={session.id} gameData={session} />
+        ))
+      }
     </div>
   );
 }

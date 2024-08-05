@@ -8,8 +8,8 @@ function NavBar() {
   }
 
   return (
-    <nav>
-      <ul>
+    <nav className="nav-bar">
+      <ul className="nav-links">
         <li>
           <Link to="/">Welcome</Link>
         </li>
