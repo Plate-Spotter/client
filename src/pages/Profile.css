@@ -5,3 +5,25 @@
   justify-content: center;
   height: 100vh;
 }
+
+.start-button {
+  padding: 10px 20px; /* Adjust the values as needed */
+  font-size: 16px; /* Optional: Adjust the font size */
+  background-color: #C34946; /* Optional: Background color */
+  color: white; /* Optional: Text color */
+  border: none; /* Optional: Remove border */
+  border-radius: 5px; /* Optional: Rounded corners */
+  cursor: pointer; /* Optional: Pointer cursor on hover */
+  margin-bottom: 20px;
+}
+
+.button:hover {
+  background-color: #782f2e; /* Optional: Background color on hover */
+}
+
+.game-sessions-container {
+  margin-top: 20px; /* Space between button and game sessions */
+  display: flex; /* or display: flex; depending on your layout preference */
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Use for grid layout */
+  gap: 20px; /* Space between game session cards */
+}

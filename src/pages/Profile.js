@@ -2,32 +2,32 @@ import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Profile.css";
 import NavBar from "../components/NavBar";
-import { getUserById } from "../api/UsersApi";
+import { getUserById, getGameSessionsById, getUser } from "../api/UsersApi";
+import { Link } from "react-router-dom";
+import GameSession from "../components/GameSession";
 
 function Profile() {
-  const [userId, setUserId] = useState();
+  const [userId, setUserId] = useState(localStorage.getItem("userId") || "");
   const [user, setUser] = useState(null);
+  const [gameSessions, setGameSessions] = useState([]);
 
   useEffect(() => {
-    if (localStorage.getItem("userId")) {
-      setUserId(localStorage.getItem('userId'));
-      // console.log(localStorage.getItem('userId'));
-    }
-  }, [])
-
-  useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        if (userId) {
-          const userData = await getUserById(userId);
+    const fetchData = async () => {
+      if (userId) {
+        try {
+          const [userData, userGameSessions] = await Promise.all([
+            getUserById(userId),
+            getGameSessionsById(userId),
+          ]);
           setUser(userData);
+          setGameSessions(userGameSessions);
+        } catch (error) {
+          console.log("Issue fetching user or game sessions", error);
         }
-      } catch (error) {
-        console.log("Issue is in fetchUser", error);
       }
     };
 
-    fetchUser();
+    fetchData();
   }, [userId]);
 
   if (!user) {
@@ -40,8 +40,15 @@ function Profile() {
     <div className="profile">
       <NavBar />
       <h2>Yo Bitch</h2>
-      <p>{user.username}'s profile page</p>
-      <button>Start New Game</button>
+      <h3>{user.username}'s profile page</h3>
+      <Link to="/start">
+        <button className="start-button">Start New Game</button>
+      </Link>
+      <div className="game-sessions-container">
+        {gameSessions.map((session) => (
+          <GameSession key={session.id} gameData={session} />
+        ))}
+      </div>
     </div>
   );
 }
