@@ -20,6 +20,8 @@ function GameSession({ gameData }) {
     <div className="game-session-container">
       <label className="game-session-label">
         <h3>Active Game: { name }</h3>
+        <p>States Left to Collect: </p>
+        <p>You started this game on: { start_date} </p>
       </label>
     </div>
   );

@@ -42,13 +42,13 @@ function Profile() {
       <h2>Yo Bitch</h2>
       <h3>{user.username}'s profile page</h3>
       <Link to="/start">
-        <button className="button">Start New Game</button>
+        <button className="start-button">Start New Game</button>
       </Link>
-      {
-        gameSessions.map((session) => (
+      <div className="game-sessions-container">
+        {gameSessions.map((session) => (
           <GameSession key={session.id} gameData={session} />
-        ))
-      }
+        ))}
+      </div>
     </div>
   );
 }
