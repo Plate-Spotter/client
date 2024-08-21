@@ -105,7 +105,7 @@ export const loginUser = async (usernameOrEmail, password) => {
   }
 };
 
-export const getGameSessionsById = async (userId) => {
+export const getUsersGameSessions = async (userId) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}/games`, {
       method: "GET",
@@ -122,7 +122,11 @@ export const getGameSessionsById = async (userId) => {
       throw new Error(`failed to log in user (${response.status})`);
     }
   } catch (error) {
-    console.error("error in getGameSessionsById:", error);
+    console.error("error in getGameSessions:", error);
     throw error;
   }
+};
+
+export const getGameSessionById = async (userId, gameId) => {
+
 };

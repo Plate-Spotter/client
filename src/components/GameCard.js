@@ -1,8 +1,10 @@
 import React from "react";
 import { useState, useEffect} from "react";
-import "./GameSession.css"
+import "./GameCard.css"
+import { Link } from "react-router-dom";
 
-function GameSession({ gameData }) {
+
+function GameCard({ gameData }) {
   const {
     id,
     type,
@@ -17,14 +19,17 @@ function GameSession({ gameData }) {
   } = gameData;
 
   return (
-    <div className="game-session-container">
-      <label className="game-session-label">
+    <div className="game-card-container">
+      <label className="game-card-label">
         <h3>Active Game: { name }</h3>
         <p>States Left to Collect: </p>
         <p>You started this game on: { start_date} </p>
       </label>
+      <Link to="/game_session" state={{ gameId: id }}>
+        <button className="game-session-button">Continue Game</button>
+      </Link>
     </div>
   );
 }
 
-export default GameSession;
+export default GameCard;
