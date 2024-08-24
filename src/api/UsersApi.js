@@ -128,5 +128,26 @@ export const getUsersGameSessions = async (userId) => {
 };
 
 export const getGameSessionById = async (userId, gameId) => {
+  try {
+    console.log("userId, gameId:", userId, gameId)
+    const response = await fetch(`${API_URL}/users/${userId}/games/${gameId}`, {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      }
+    });
 
+    if (response.status === 200) {
+      const data = await response.json();
+      console.log("API response data:", data);
+      console.log("API response data.attributes.collected_states:", data.attributes.collected_states);
+      return data;
+      } else {
+        throw new Error(`failed to fetch data (${response.status})`);
+      }
+  } catch (error) {
+    console.error("error in getUsersGameById:", error);
+    throw error;
+  }
 };

@@ -22,7 +22,8 @@ function GameCard({ gameData }) {
     <div className="game-card-container">
       <label className="game-card-label">
         <h3>Active Game: { name }</h3>
-        <p>States Left to Collect: </p>
+        <p>States Collected: {collected_states.length}</p>
+        <p>Number of States Left to Collect: </p>
         <p>You started this game on: { start_date} </p>
       </label>
       <Link to="/game_session" state={{ gameId: id }}>
