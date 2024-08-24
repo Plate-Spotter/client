@@ -1,8 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const getUser = async () => {
-  console.log("inside get user");
-  console.log("API_URL", API_URL);
   try {
     const response = await fetch(`${API_URL}/users/1`, {
       headers: {
@@ -15,7 +13,6 @@ export const getUser = async () => {
     }
 
     const data = await response.json();
-    console.log("data is here", data);
     return data;
   } catch (error) {
     console.error("Error in getUser:", error);
@@ -24,8 +21,6 @@ export const getUser = async () => {
 };
 
 export const getUserById = async (userId) => {
-  console.log("inside getUserById");
-  console.log("userId", userId);
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
       headers: {
@@ -38,7 +33,6 @@ export const getUserById = async (userId) => {
     }
 
     const data = await response.json();
-    console.log("Profile data is here donkey", data);
     return data;
   } catch (error) {
     console.error("Error in getUserById", error);
@@ -129,7 +123,6 @@ export const getUsersGameSessions = async (userId) => {
 
 export const getGameSessionById = async (userId, gameId) => {
   try {
-    console.log("userId, gameId:", userId, gameId)
     const response = await fetch(`${API_URL}/users/${userId}/games/${gameId}`, {
       method: "GET",
       headers: {
@@ -140,8 +133,6 @@ export const getGameSessionById = async (userId, gameId) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log("API response data:", data);
-      console.log("API response data.attributes.collected_states:", data.attributes.collected_states);
       return data;
       } else {
         throw new Error(`failed to fetch data (${response.status})`);

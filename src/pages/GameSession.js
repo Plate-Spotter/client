@@ -6,42 +6,49 @@ import StateSearch from "../components/StateSearchCard.js";
 
 function GameSession() {
   const [gameId, setGameId] = useState(useLocation().state.gameId);
-  const [userId, setUserId] = useState(null)
+  const [userId, setUserId] = useState(null);
   const [userGameSessionData, setUserGameSessionData] = useState([]);
   console.log("GameSession gameId:", gameId);
   console.log("GameSession userId:", userId);
-  console.log("GameSession userLicensePlates:", userGameSessionData);
+  // console.log("GameSession user's collected plates:", userGameSessionData.attributes.collected_states);
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem('userId');
+    const storedUserId = localStorage.getItem("userId");
     if (storedUserId) {
-     setUserId(storedUserId);
+      setUserId(storedUserId);
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
-    const fetchData = async() => {
+    const fetchData = async () => {
       if (gameId && userId) {
         try {
           const gameSessionData = await getGameSessionById(userId, gameId);
-          console.log("User Game Sessions Data:", gameSessionData)
-          setUserGameSessionData(gameSessionData)
+          console.log("User Game Sessions Data:", gameSessionData);
+          setUserGameSessionData(gameSessionData);
         } catch (error) {
-          console.log("Issue fetching userLicensePlate data in GameSession:", error);
+          console.log(
+            "Issue fetching userLicensePlate data in GameSession:",
+            error
+          );
         }
       }
-     }
+    };
 
-     fetchData();
-  }, [gameId, userId])
-
-
+    fetchData();
+  }, [gameId, userId]);
 
   return (
-    <div>
-      <h1>dawg</h1>
-      <StateSearch gameId={gameId} userGameSessionData={userGameSessionData} userId={userId} />
-    </div>
+    <>
+      <h1>Game Session Page, Dawg</h1>
+      <div className="state-search-wrapper">
+        <StateSearch
+          gameId={gameId}
+          userGameSessionData={userGameSessionData}
+          userId={userId}
+        />
+      </div>
+    </>
   );
 }
 
