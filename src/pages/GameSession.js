@@ -3,14 +3,13 @@ import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import { getGameSessionById, getUsersGameById } from "../api/UsersApi.js";
 import StateSearch from "../components/StateSearchCard.js";
+import UserScoreboard from "../components/UserScoreboardCard.js";
+import "./GameSession.css"
 
 function GameSession() {
   const [gameId, setGameId] = useState(useLocation().state.gameId);
   const [userId, setUserId] = useState(null);
   const [userGameSessionData, setUserGameSessionData] = useState([]);
-  console.log("GameSession gameId:", gameId);
-  console.log("GameSession userId:", userId);
-  // console.log("GameSession user's collected plates:", userGameSessionData.attributes.collected_states);
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -40,13 +39,22 @@ function GameSession() {
 
   return (
     <>
-      <h1>Game Session Page, Dawg</h1>
-      <div className="state-search-wrapper">
-        <StateSearch
-          gameId={gameId}
-          userGameSessionData={userGameSessionData}
-          userId={userId}
-        />
+      <h1 className="game-session-header">Game Session Page, Dawg</h1>
+      <div className="game-session-wrapper">
+        <div className="state-search-box">
+          <StateSearch
+            gameId={gameId}
+            userGameSessionData={userGameSessionData}
+            userId={userId}
+          />
+        </div>
+        <div className="user-scoreboard-container">
+          <UserScoreboard
+            gameId={gameId}
+            userGameSessionData={userGameSessionData}
+            userId={userId}
+          />
+        </div>
       </div>
     </>
   );

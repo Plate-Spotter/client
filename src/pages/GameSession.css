@@ -1,0 +1,23 @@
+.game-session-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.game-session-wrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 0 20px;
+}
+
+.state-search-box {
+  flex: 1;
+  max-width: 400px;
+  box-sizing: border-box;
+}
+
+.user-scoreboard-container {
+  flex: 1;
+  max-width: 400px;
+  box-sizing: border-box;
+}

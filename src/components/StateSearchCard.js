@@ -2,17 +2,12 @@ import React from "react";
 import { useState } from "react";
 import "./StateSearchCard.css"
 
-function StateSearch({ gameId, userGameSessionData, userId }) {
-  console.log("userGameSessionData:", userGameSessionData);
+function StateSearch({ userId, gameId, userGameSessionData }) {
   // const {
   //   attributes: { collected_states, uncollected_states },
   // } = userGameSessionData;
 
-  const collectedStates = userGameSessionData?.attributes?.collected_states || [];
   const uncollectedStates = userGameSessionData?.attributes?.uncollected_states || [];
-
-  console.log("Collected States:", collectedStates);
-  console.log("Uncollected States:", uncollectedStates);
 
   const [searchQuery, setSearchQuery] = useState("");
 

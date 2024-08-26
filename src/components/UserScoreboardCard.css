@@ -1,0 +1,19 @@
+.user-scoreboard-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.user-scoreboard-box {
+  padding: 10px;
+  border: 3px solid #c7bfbf;
+  border-radius: 10px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.collected-state-list {
+  margin-left: 8px;
+  font-size: 16px;
+}
