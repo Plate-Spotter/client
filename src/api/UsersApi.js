@@ -106,7 +106,7 @@ export const getUsersGameSessions = async (userId) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
+      },
     });
 
     if (response.status === 200) {
@@ -128,17 +128,54 @@ export const getGameSessionById = async (userId, gameId) => {
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
-      }
+      },
     });
 
     if (response.status === 200) {
       const data = await response.json();
       return data;
-      } else {
-        throw new Error(`failed to fetch data (${response.status})`);
-      }
+    } else {
+      throw new Error(`failed to fetch data (${response.status})`);
+    }
   } catch (error) {
     console.error("error in getUsersGameById:", error);
+    throw error;
+  }
+};
+
+export const postUserLicensePlate = async (
+  userId,
+  gameId,
+  selectedLicensePlateState
+) => {
+
+  try {
+    const response = await fetch(
+      `${API_URL}/users/${userId}/games/${gameId}/users_license_plates`,
+      {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          game_id: gameId,
+          collected_states: [{
+            name: selectedLicensePlateState.name,
+            abbreviation: selectedLicensePlateState.abbreviation,
+            collected: true,
+          }],
+        }),
+      }
+    );
+    console.log("RRREsppnse", response);
+    if (response.status === 201) {
+      const data = await response.json();
+      return data;
+    }
+  } catch (error) {
+    console.error("Error collecting license plate:", error);
     throw error;
   }
 };

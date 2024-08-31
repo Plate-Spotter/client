@@ -1,19 +1,17 @@
 import React from "react";
 import { useState } from "react";
 import "./StateSearchCard.css"
+import { postUserLicensePlate } from "../api/UsersApi"
 
 function StateSearch({ userId, gameId, userGameSessionData }) {
-  // const {
-  //   attributes: { collected_states, uncollected_states },
-  // } = userGameSessionData;
 
-  const uncollectedStates = userGameSessionData?.attributes?.uncollected_states || [];
+  const uncollectedLpStates = userGameSessionData?.attributes?.uncollected_states || [];
 
   const [searchQuery, setSearchQuery] = useState("");
 
-  const [searchListSelection, setSearchListSelection] = useState("");
+  const [selectedLpStateName, setSelectedLpStateName] = useState("");
 
-  const filteredUncollectedStates = uncollectedStates.filter(state =>
+  const filteredUncollectedLpStates = uncollectedLpStates.filter(state =>
     state.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -21,8 +19,26 @@ function StateSearch({ userId, gameId, userGameSessionData }) {
     setSearchQuery(event.target.value);
   };
 
-  const handleRadionChange = (event) => {
-    setSearchListSelection(event.target.value);
+  const handleRadioChange = (event) => {
+    setSelectedLpStateName(event.target.value);
+  };
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+
+    if (!selectedLpStateName) {
+      alert("Please select a state");
+      return;
+    }
+
+    const selectedLpState = uncollectedLpStates.find(lpState => lpState.name === selectedLpStateName);
+
+    try{
+      const response = await postUserLicensePlate(userId, gameId, selectedLpState);
+      alert(`${selectedLpState.name} has been collected`);
+    } catch (error) {
+      alert("There was an error collecting this license plate.");
+    }
   };
 
 
@@ -40,18 +56,18 @@ function StateSearch({ userId, gameId, userGameSessionData }) {
         />
 
         <div className="uncollected-states-list">
-          <h3>Uncollected States: {filteredUncollectedStates.length} left</h3>
-            <form>
-              {filteredUncollectedStates.length > 0 ? (
-                filteredUncollectedStates.map((state, index) => (
+          <h3>Uncollected States: {filteredUncollectedLpStates.length} left</h3>
+            <form onSubmit={handleFormSubmit}>
+              {filteredUncollectedLpStates.length > 0 ? (
+                filteredUncollectedLpStates.map((state, index) => (
                   <div key={index} className="radio-group">
                     <input
                       type="radio"
                       id={`state-${index}`}
-                      name="state"
+                      name="license-plate-state"
                       value={state.name}
-                      checked={searchListSelection === state.name}
-                      onChange={handleRadionChange}
+                      checked={selectedLpStateName === state.name}
+                      onChange={handleRadioChange}
                     />
                     <label htmlFor={`state-${index}`}>{state.name} ({state.abbreviation})</label>
                   </div>
@@ -59,6 +75,7 @@ function StateSearch({ userId, gameId, userGameSessionData }) {
               ) : (
                 <li>No States Match Your Search</li>
               )}
+              <button type="submit" className="submit-button">Collect License Plate</button>
             </form>
         </div>
       </div>
