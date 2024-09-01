@@ -7,20 +7,6 @@ import NavBar from "../components/NavBar";
 
 
 function Welcome() {
-  const [user, setUser] = useState([]);
-
-  const fetchUserInfo = async () => {
-    try {
-      const userInfo = await getUser();
-      setUser(userInfo)
-    } catch (error) {
-      console.error("Error fetching User Info:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserInfo ()
-  }, []);
 
   return (
     <>
