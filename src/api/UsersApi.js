@@ -1,25 +1,5 @@
 const API_URL = process.env.REACT_APP_API_URL;
 
-export const getUser = async () => {
-  try {
-    const response = await fetch(`${API_URL}/users/1`, {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    });
-    if (!response.ok) {
-      throw new Error(`Failed to fetch user (${response.status})`);
-    }
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error in getUser:", error);
-    throw error;
-  }
-};
-
 export const getUserById = async (userId) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
@@ -169,7 +149,6 @@ export const postUserLicensePlate = async (
         }),
       }
     );
-    console.log("RRREsppnse", response);
     if (response.status === 201) {
       const data = await response.json();
       return data;
