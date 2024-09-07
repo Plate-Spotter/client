@@ -1,4 +1,8 @@
 const API_URL = process.env.REACT_APP_API_URL;
+const MOCK_SERVER = process.env.REACT_APP_MOCK_SERVER_URL;
+
+console.log("API_URL", API_URL)
+console.log("MOCK_SERVER", MOCK_SERVER)
 
 export const getUserById = async (userId) => {
   try {
@@ -27,7 +31,7 @@ export const registerUser = async (
   confirmPassword
 ) => {
   try {
-    const response = await fetch(`${API_URL}/users`, {
+    const response = await fetch(`${MOCK_SERVER}/users`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -55,7 +59,7 @@ export const registerUser = async (
 
 export const loginUser = async (usernameOrEmail, password) => {
   try {
-    const response = await fetch(`${API_URL}/login`, {
+    const response = await fetch(`${MOCK_SERVER}/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -81,7 +85,7 @@ export const loginUser = async (usernameOrEmail, password) => {
 
 export const getUsersGameSessions = async (userId) => {
   try {
-    const response = await fetch(`${API_URL}/users/${userId}/games`, {
+    const response = await fetch(`${MOCK_SERVER}/users/${userId}/games`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -103,7 +107,7 @@ export const getUsersGameSessions = async (userId) => {
 
 export const getGameSessionById = async (userId, gameId) => {
   try {
-    const response = await fetch(`${API_URL}/users/${userId}/games/${gameId}`, {
+    const response = await fetch(`${MOCK_SERVER}/users/${userId}/games/${gameId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -131,7 +135,7 @@ export const postUserLicensePlate = async (
 
   try {
     const response = await fetch(
-      `${API_URL}/users/${userId}/games/${gameId}/users_license_plates`,
+      `${MOCK_SERVER}/users/${userId}/games/${gameId}/users_license_plates`,
       {
         method: "POST",
         headers: {
