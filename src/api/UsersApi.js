@@ -31,7 +31,7 @@ export const registerUser = async (
   confirmPassword
 ) => {
   try {
-    const response = await fetch(`${MOCK_SERVER}/users`, {
+    const response = await fetch(`${API_URL}/users`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -59,7 +59,7 @@ export const registerUser = async (
 
 export const loginUser = async (usernameOrEmail, password) => {
   try {
-    const response = await fetch(`${MOCK_SERVER}/login`, {
+    const response = await fetch(`${API_URL}/users/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -85,7 +85,7 @@ export const loginUser = async (usernameOrEmail, password) => {
 
 export const getUsersGameSessions = async (userId) => {
   try {
-    const response = await fetch(`${MOCK_SERVER}/users/${userId}/games`, {
+    const response = await fetch(`${API_URL}/users/${userId}/games`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -95,9 +95,9 @@ export const getUsersGameSessions = async (userId) => {
 
     if (response.status === 200) {
       const data = await response.json();
-      return data.games;
+      return data.games || [];
     } else {
-      throw new Error(`failed to log in user (${response.status})`);
+      throw new Error(`failed to retrieve users games (${response.status})`);
     }
   } catch (error) {
     console.error("error in getGameSessions:", error);
