@@ -1,9 +1,6 @@
 const API_URL = process.env.REACT_APP_API_URL;
 const MOCK_SERVER = process.env.REACT_APP_MOCK_SERVER_URL;
 
-console.log("API_URL", API_URL)
-console.log("MOCK_SERVER", MOCK_SERVER)
-
 export const getUserById = async (userId) => {
   try {
     const response = await fetch(`${API_URL}/users/${userId}`, {
@@ -107,7 +104,7 @@ export const getUsersGameSessions = async (userId) => {
 
 export const getGameSessionById = async (userId, gameId) => {
   try {
-    const response = await fetch(`${MOCK_SERVER}/users/${userId}/games/${gameId}`, {
+    const response = await fetch(`${API_URL}/users/${userId}/games/${gameId}`, {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -135,7 +132,7 @@ export const postUserLicensePlate = async (
 
   try {
     const response = await fetch(
-      `${MOCK_SERVER}/users/${userId}/games/${gameId}/users_license_plates`,
+      `${API_URL}/users/${userId}/games/${gameId}/users_license_plates`,
       {
         method: "POST",
         headers: {
@@ -162,3 +159,58 @@ export const postUserLicensePlate = async (
     throw error;
   }
 };
+
+export const postNewGame = async (gameName, gameDate, userId) => {
+  try {
+    const formattedDate = new Date(gameDate).toISOString();
+    const threeMonthsFromFormDate = new Date(gameDate);
+    threeMonthsFromFormDate.setMonth(threeMonthsFromFormDate.getMonth() + 3);
+    const end_date = threeMonthsFromFormDate.toISOString();
+    console.log("formattedDate:", formattedDate);
+    console.log("end_date:", end_date);
+    const response = await fetch(`${API_URL}/games`, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: gameName,
+        user_id: userId,
+        start_date: formattedDate,
+        end_date: formattedDate,
+      }),
+    });
+
+    if (response.status === 201) {
+      const data = await response.json();
+      return data;
+    } else {
+      throw new Error(`failed to create game (${response.status})`);
+    }
+  } catch (error) {
+    console.error("error in postNewGame:", error);
+    throw error;
+  }
+};
+
+// export const deleteUsersGameSession = async (userId, gameId) => {
+//   try {
+//     const response = await fetch(`${API_URL}/users/${userId}/games/${gameId}`, {
+//       method: "DELETE",
+//       headers: {
+//         Accept: "application/json",
+//         "Content-Type": "application/json",
+//       },
+//     });
+
+//     if (response.status === 204) {
+//       return true;
+//     } else {
+//       throw new Error(`failed to delete game session (${response.status})`);
+//     }
+//   } catch (error) {
+//     console.error("error in deleteUsersGameSession:", error);
+//     throw error;
+//   }
+// }
