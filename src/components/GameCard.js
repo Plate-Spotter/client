@@ -6,17 +6,15 @@ import { getGameSessionById } from "../api/UsersApi.js";
 
 
 function GameCard({ gameData }) {
+  console.log("Game Data in GameCard:", gameData);
   const {
-    id,
-    type,
-    attributes: {
+      id,
       name,
       start_date,
       end_date,
       collected_states,
       created_at,
       updated_at
-    }
   } = gameData;
 
   const gameId = gameData.id
