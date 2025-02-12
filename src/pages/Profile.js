@@ -11,6 +11,9 @@ function Profile() {
   const [user, setUser] = useState(null);
   const [gameSessions, setGameSessions] = useState([]);
 
+  console.log("User ID profile:", userId);
+  console.log("GAME SESSIONS:", gameSessions);
+
   useEffect(() => {
     const fetchData = async () => {
       if (userId) {
@@ -42,7 +45,7 @@ function Profile() {
       <NavBar />
       <h2>Welcome back, friend</h2>
       <h3>{user.username}'s profile page</h3>
-      <Link to="/start">
+      <Link to="/start" state={{ userId: userId }}>
         <button className="start-button">Start New Game</button>
       </Link>
       <div className="game-sessions-container">
