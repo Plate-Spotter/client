@@ -89,10 +89,10 @@ export const getUsersGameSessions = async (userId) => {
         "Content-Type": "application/json",
       },
     });
-
+    console.log("response:", response.body);
     if (response.status === 200) {
       const data = await response.json();
-      return data.games || [];
+      return data || [];
     } else {
       throw new Error(`failed to retrieve users games (${response.status})`);
     }
