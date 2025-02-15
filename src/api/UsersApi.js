@@ -89,7 +89,6 @@ export const getUsersGameSessions = async (userId) => {
         "Content-Type": "application/json",
       },
     });
-    console.log("response:", response.body);
     if (response.status === 200) {
       const data = await response.json();
       return data || [];
@@ -166,8 +165,6 @@ export const postNewGame = async (gameName, gameDate, userId) => {
     const threeMonthsFromFormDate = new Date(gameDate);
     threeMonthsFromFormDate.setMonth(threeMonthsFromFormDate.getMonth() + 3);
     const end_date = threeMonthsFromFormDate.toISOString();
-    console.log("formattedDate:", formattedDate);
-    console.log("end_date:", end_date);
     const response = await fetch(`${API_URL}/games`, {
       method: "POST",
       headers: {
@@ -179,6 +176,7 @@ export const postNewGame = async (gameName, gameDate, userId) => {
         user_id: userId,
         start_date: formattedDate,
         end_date: formattedDate,
+        collected_states: [],
       }),
     });
 

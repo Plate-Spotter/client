@@ -15,7 +15,7 @@ function StartGameCard() {
   const [gameDate, setGameDate] = React.useState(null);
 
   useEffect(() => {
-    console.log("User ID in StartGameCard:", userId);
+
     if (!userId) {
       console.log("No user ID found in StartGameCard");
     }

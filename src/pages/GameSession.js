@@ -28,7 +28,6 @@ function GameSession() {
           getUserById(userId),
           getGameSessionById(userId, gameId)
         ]);
-        console.log("userData", userData)
         setUserGameSessionData(userData);
         setUsername(userData.username);
         setUserGameSessionData(gameSessionData);
@@ -43,8 +42,6 @@ function GameSession() {
 
     fetchData();
   }, [gameId, userId]);
-
-  console.log("Username in game session", username)
 
   return (
     <>
