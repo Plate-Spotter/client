@@ -13,7 +13,6 @@ function LoginForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("submitting:", usernameOrEmail, password);
     try {
       const userData = await loginUser(usernameOrEmail, password);
       setIsLoggedInsetIsLoggedIn(true);

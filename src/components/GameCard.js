@@ -6,7 +6,6 @@ import { getGameSessionById } from "../api/UsersApi.js";
 
 
 function GameCard({ gameData }) {
-  console.log("Game Data in GameCard:", gameData);
   const {
       id,
       name,
@@ -49,9 +48,6 @@ function GameCard({ gameData }) {
     fetchData();
   }, [gameId, userId]);
 
-
-
-
   return (
     <div className="game-card-container">
       <label className="game-card-label">
@@ -60,7 +56,7 @@ function GameCard({ gameData }) {
         <p>Number of States Left to Collect: { statesLeftToCollect }</p>
         <p>You started this game on: { start_date} </p>
       </label>
-      <Link to="/game_session" state={{ gameId: id }}>
+      <Link to="/game-session" state={{ gameId: id }}>
         <button className="game-session-button">Continue Game</button>
       </Link>
     </div>

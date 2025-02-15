@@ -16,7 +16,7 @@ function App() {
       <Route path="/register" element={<Register />} />
       <Route path="/start" element={<StartGame />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/game_session" element={<GameSession />} />
+      <Route path="/game-session" element={<GameSession />} />
     </Routes>
   )
 

@@ -15,7 +15,6 @@ function RegisterForm() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log("submitting:", username, email, password);
     try {
       const userData = await registerUser(username, email, password, confirmPassword);
       setIsRegistered(true);

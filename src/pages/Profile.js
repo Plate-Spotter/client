@@ -11,9 +11,6 @@ function Profile() {
   const [user, setUser] = useState(null);
   const [gameSessions, setGameSessions] = useState([]);
 
-  console.log("User ID profile:", userId);
-  console.log("GAME SESSIONS:", gameSessions);
-
   useEffect(() => {
     const fetchData = async () => {
       if (userId) {
