@@ -126,12 +126,12 @@ export const getGameSessionById = async (userId, gameId) => {
 export const postUserLicensePlate = async (
   userId,
   gameId,
-  selectedLicensePlateState
+  license_plate_id
 ) => {
 
   try {
     const response = await fetch(
-      `${API_URL}/users/${userId}/games/${gameId}/users_license_plates`,
+      `${API_URL}/users/${userId}/license_plates`,
       {
         method: "POST",
         headers: {
@@ -141,11 +141,7 @@ export const postUserLicensePlate = async (
         body: JSON.stringify({
           user_id: userId,
           game_id: gameId,
-          collected_states: [{
-            name: selectedLicensePlateState.name,
-            abbreviation: selectedLicensePlateState.abbreviation,
-            collected: true,
-          }],
+          license_plate_id: license_plate_id,
         }),
       }
     );

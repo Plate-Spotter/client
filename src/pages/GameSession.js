@@ -43,16 +43,21 @@ function GameSession() {
     fetchData();
   }, [gameId, userId]);
 
+  console.log("userGameSessionData", userGameSessionData);
+  console.log("Uncollected States", userGameSessionData.uncollected_states);
+
   return (
     <>
     <NavBar />
       <h1 className="game-session-header">{username}'s Game Session Page, Dawg</h1>
+      <h2 className="game-session-name">{userGameSessionData.name}</h2>
       <div className="game-session-wrapper">
         <div className="state-search-box">
           <StateSearch
             gameId={gameId}
             userGameSessionData={userGameSessionData}
             userId={userId}
+            setUserGameSessionData={setUserGameSessionData}
           />
         </div>
         <div className="user-scoreboard-container">

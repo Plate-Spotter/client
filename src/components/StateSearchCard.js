@@ -1,11 +1,11 @@
 import React from "react";
 import { useState } from "react";
 import "./StateSearchCard.css"
-import { postUserLicensePlate } from "../api/UsersApi"
+import { getGameSessionById, postUserLicensePlate } from "../api/UsersApi"
 
-function StateSearch({ userId, gameId, userGameSessionData }) {
+function StateSearch({ userId, gameId, userGameSessionData, setUserGameSessionData }) {
 
-  const uncollectedLpStates = userGameSessionData?.attributes?.uncollected_states || [];
+  const uncollectedLpStates = userGameSessionData?.uncollected_states || [];
 
   const [searchQuery, setSearchQuery] = useState("");
 
@@ -31,11 +31,13 @@ function StateSearch({ userId, gameId, userGameSessionData }) {
       return;
     }
 
-    const selectedLpState = uncollectedLpStates.find(lpState => lpState.name === selectedLpStateName);
+    const license_plate_id = uncollectedLpStates.find(lpState => lpState.name === selectedLpStateName).id;
 
     try{
-      const response = await postUserLicensePlate(userId, gameId, selectedLpState);
-      alert(`${selectedLpState.name} has been collected`);
+      const response = await postUserLicensePlate(userId, gameId, license_plate_id);
+      const gameSessionData = await getGameSessionById(userId, gameId);
+      setUserGameSessionData(gameSessionData);
+      alert(`${selectedLpStateName} has been collected`);
     } catch (error) {
       alert("There was an error collecting this license plate.");
     }
