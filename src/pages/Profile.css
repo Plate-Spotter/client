@@ -26,4 +26,7 @@
   display: flex; /* or display: flex; depending on your layout preference */
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Use for grid layout */
   gap: 20px; /* Space between game session cards */
+  flex-direction: column;
+  height: 50%;
+  flex-wrap: wrap;
 }
