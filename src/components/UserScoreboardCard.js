@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./UserScoreboardCard.css";
 
 function UserScoreboard({ userId, gameId, username, userGameSessionData }) {
+  
   const collectedStates =
-    userGameSessionData?.attributes?.collected_states || [];
+    userGameSessionData?.collected_states || [];
+
+
 
 
   return (
