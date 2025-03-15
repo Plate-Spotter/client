@@ -1,6 +1,7 @@
 import React from "react";
 import { postNewGame } from "../api/UsersApi";
 import { useNavigate } from "react-router-dom";
+import "./StartGameButton.css";
 
 function StartGameButton({ gameName, gameDate, userId }) {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ function StartGameButton({ gameName, gameDate, userId }) {
   }
 
   return (
-    <button onClick={ handleStartGame }>Start Game</button>
+    <button className="start-game-button" onClick={ handleStartGame }>Start Game</button>
   )
 
 };
