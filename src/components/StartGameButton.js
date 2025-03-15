@@ -12,7 +12,6 @@ function StartGameButton({ gameName, gameDate, userId }) {
       const gameData = await postNewGame(gameName, gameDate, userId);
 
       if (gameData?.id) {
-        console.log("Game ID StartGameBUtton: ", gameData.id);
         navigate(`/game-session`, { state: { gameId: gameData.id } });
       } else {
         console.error("Game ID not found in response data");
