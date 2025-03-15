@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import "./StartGameCard.css";
 import StartGameButton from "./StartGameButton";
+import CancelGameButton from "./CancelGameButton";
 import { useState } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
@@ -51,7 +52,10 @@ function StartGameCard() {
           </LocalizationProvider>
         </form>
       </div>
-      <StartGameButton gameName={gameName} gameDate={gameDate} userId={userId}/>
+      <div className="game-buttons-container">
+        <StartGameButton gameName={gameName} gameDate={gameDate} userId={userId}/>
+        <CancelGameButton />
+      </div>
     </div>
   );
 }

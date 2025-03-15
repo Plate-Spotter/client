@@ -19,9 +19,11 @@ function GameCard({ gameData }) {
   const gameId = gameData.id
   const [userId, setUserId] = useState(null);
   const [gameCardSessionData, setGameCardSessionData] = useState([]);
-  const uncollectedStates = gameCardSessionData?.attributes?.uncollected_states || [];
+  const uncollectedStates = gameCardSessionData?.uncollected_states || [];
+  const collectedStates = gameCardSessionData?.collected_states || [];
 
   const statesLeftToCollect = uncollectedStates.length
+  const statesCollected = collectedStates.length
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -52,7 +54,7 @@ function GameCard({ gameData }) {
     <div className="game-card-container">
       <label className="game-card-label">
         <h3>Active Game: { name }</h3>
-        <p>States Collected: {collected_states.length}</p>
+        <p>States Collected: { statesCollected }</p>
         <p>Number of States Left to Collect: { statesLeftToCollect }</p>
         <p>You started this game on: { start_date} </p>
       </label>

@@ -188,6 +188,27 @@ export const postNewGame = async (gameName, gameDate, userId) => {
   }
 };
 
+export const deleteGame = async (gameId) => {
+  try {
+    const response = await fetch(`${API_URL}/games/${gameId}`, {
+      method: "DELETE",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.status === 204) {
+      return true;
+    } else {
+      throw new Error(`failed to delete game (${response.status})`);
+    }
+  } catch (error) {
+    console.error("error in deleteGame:", error);
+    throw error;
+  }
+};
+
 // export const deleteUsersGameSession = async (userId, gameId) => {
 //   try {
 //     const response = await fetch(`${API_URL}/users/${userId}/games/${gameId}`, {
