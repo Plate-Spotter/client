@@ -8,12 +8,14 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useLocation } from "react-router-dom";
+import dayjs from 'dayjs';
 
 function StartGameCard() {
   const location = useLocation();
   const { userId } = location.state || {};
   const [gameName, setGameName] = React.useState("");
   const [gameDate, setGameDate] = React.useState(null);
+  const today = dayjs();
 
   useEffect(() => {
 
@@ -47,7 +49,13 @@ function StartGameCard() {
           </label>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
-              <DatePicker label="Select a Start Date" value={gameDate} onChange={handleGameDateChange}/>
+              <DatePicker
+                label="Select a Start Date"
+                value={gameDate}
+                onChange={handleGameDateChange}
+                defaultValue={today}
+                minDate={today}
+              />
             </DemoContainer>
           </LocalizationProvider>
         </form>
