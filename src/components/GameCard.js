@@ -3,6 +3,7 @@ import { useState, useEffect} from "react";
 import "./GameCard.css"
 import { Link } from "react-router-dom";
 import { getGameSessionById } from "../api/UsersApi.js";
+import dayjs from "dayjs";
 
 
 function GameCard({ gameData }) {
@@ -24,6 +25,7 @@ function GameCard({ gameData }) {
 
   const statesLeftToCollect = uncollectedStates.length
   const statesCollected = collectedStates.length
+  const formattedStartDate = dayjs(start_date).format('MMMM D, YYYY')
 
   useEffect(() => {
     const storedUserId = localStorage.getItem("userId");
@@ -56,7 +58,7 @@ function GameCard({ gameData }) {
         <h3>Active Game: { name }</h3>
         <p>States Collected: { statesCollected }</p>
         <p>Number of States Left to Collect: { statesLeftToCollect }</p>
-        <p>You started this game on: { start_date} </p>
+        <p>You started this game on: { formattedStartDate } </p>
       </label>
       <Link to="/game-session" state={{ gameId: id }}>
         <button className="game-session-button">Continue Game</button>
