@@ -31,7 +31,7 @@ function StartGameCard() {
   const handleGameDateChange = (date) => {
     setGameDate(date);
   };
-
+  console.log(gameDate)
   return (
     <div className="display">
       <h3>Start a Game, friend</h3>

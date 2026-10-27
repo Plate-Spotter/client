@@ -37,6 +37,7 @@ function StateSearch({ userId, gameId, userGameSessionData, setUserGameSessionDa
       const response = await postUserLicensePlate(userId, gameId, license_plate_id);
       const gameSessionData = await getGameSessionById(userId, gameId);
       setUserGameSessionData(gameSessionData);
+      window.scroll({ top: 0, left: 0, behavior: 'smooth' });
       alert(`${selectedLpStateName} has been collected`);
     } catch (error) {
       alert("There was an error collecting this license plate.");
