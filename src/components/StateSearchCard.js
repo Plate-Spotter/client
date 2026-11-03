@@ -7,6 +7,13 @@ function StateSearch({ userId, gameId, userGameSessionData, setUserGameSessionDa
 
   const uncollectedLpStates = userGameSessionData?.uncollected_states || [];
 
+  const [uncollectedStatesMap, setUncollectedStatesMap] = useState(() =>
+    uncollectedLpStates.reduce((map, currentState) => {
+    map[currentState.name] = {...currentState, selected: false}
+    return map
+  }, {})
+  )
+
   const [searchQuery, setSearchQuery] = useState("");
 
   const [selectedLpStateName, setSelectedLpStateName] = useState("");
@@ -19,8 +26,11 @@ function StateSearch({ userId, gameId, userGameSessionData, setUserGameSessionDa
     setSearchQuery(event.target.value);
   };
 
-  const handleRadioChange = (event) => {
-    setSelectedLpStateName(event.target.value);
+  const handleStateSelection = (event) => {
+    setUncollectedStatesMap(prev => ({
+      ...prev,
+      [event]: { ...prev[event], selected: !prev[event].selected}
+    }))
   };
 
   const handleFormSubmit = async (event) => {
@@ -43,7 +53,7 @@ function StateSearch({ userId, gameId, userGameSessionData, setUserGameSessionDa
       alert("There was an error collecting this license plate.");
     }
   };
-
+  console.log(uncollectedStatesMap, "here ye")
 
   return (
       <div className="state-search-container">
@@ -60,24 +70,26 @@ function StateSearch({ userId, gameId, userGameSessionData, setUserGameSessionDa
 
         <div className="uncollected-states-list">
           <h3>Uncollected States: {filteredUncollectedLpStates.length} left</h3>
-            <form onSubmit={handleFormSubmit}>
-              {filteredUncollectedLpStates.length > 0 ? (
-                filteredUncollectedLpStates.map((state, index) => (
-                  <div key={index} className="radio-group">
-                    <input
-                      type="radio"
-                      id={`state-${index}`}
-                      name="license-plate-state"
-                      value={state.name}
-                      checked={selectedLpStateName === state.name}
-                      onChange={handleRadioChange}
-                    />
-                    <label htmlFor={`state-${index}`}>{state.name} ({state.abbreviation})</label>
-                  </div>
-                ))
-              ) : (
-                <li>No States Match Your Search</li>
-              )}
+            <form id="uncollected-states-box" onSubmit={handleFormSubmit}>
+              <fieldset>
+                {filteredUncollectedLpStates.length > 0 ? (
+                  Object.values(uncollectedStatesMap).map((state) => (
+                    <div key={index} className="radio-group">
+                      <input
+                        type="checkbox"
+                        id={`state-${index}`}
+                        name="license-plate-state"
+                        value={state.name}
+                        checked={state.selected}
+                        onChange={() => handleStateSelection(state.name)}
+                        />
+                      <label htmlFor={`state-${index}`}>{state.name} ({state.abbreviation})</label>
+                    </div>
+                  ))
+                ) : (
+                  <li>No States Match Your Search</li>
+                )}
+              </fieldset>
               <button type="submit" className="submit-button">Collect License Plate</button>
             </form>
         </div>
