@@ -7,18 +7,24 @@ import { loginUser } from "../api/UsersApi";
 function LoginForm() {
   const [usernameOrEmail, setUsernameOrEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [setIsLoggedIn, setIsLoggedInsetIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
+  const [error, setError] = useState(null);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setError(null);
+
     try {
       const userData = await loginUser(usernameOrEmail, password);
-      setIsLoggedInsetIsLoggedIn(true);
+      if (!userData.id) {
+        throw new Error("Invalid login credentials");
+      }
+      setIsLoggedIn(true);
       setUserId(userData.id);
     } catch (error) {
-      console.log(error);
+      setError("Login failed. Please try again.");
     }
   };
 
@@ -31,6 +37,11 @@ function LoginForm() {
 
   return (
     <div className="login-form-container">
+      {error && <div className="error-popup" onClick={() => setError(null)}>
+        <div className="error-popup-content" onClick={(e) => e.stopPropagation()}>
+          <p>{error}</p>
+        </div>
+      </div>}
       <form className="login-form" onSubmit={handleSubmit}>
         <label className="login-form-label">
           Username or Email:

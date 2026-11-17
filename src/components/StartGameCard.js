@@ -1,18 +1,21 @@
 import React, { useEffect } from "react";
 import "./StartGameCard.css";
 import StartGameButton from "./StartGameButton";
+import CancelGameButton from "./CancelGameButton";
 import { useState } from "react";
 import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useLocation } from "react-router-dom";
+import dayjs from 'dayjs';
 
 function StartGameCard() {
   const location = useLocation();
   const { userId } = location.state || {};
   const [gameName, setGameName] = React.useState("");
   const [gameDate, setGameDate] = React.useState(null);
+  const today = dayjs();
 
   useEffect(() => {
 
@@ -28,7 +31,7 @@ function StartGameCard() {
   const handleGameDateChange = (date) => {
     setGameDate(date);
   };
-
+  console.log(gameDate)
   return (
     <div className="display">
       <h3>Start a Game, friend</h3>
@@ -46,12 +49,21 @@ function StartGameCard() {
           </label>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DemoContainer components={["DatePicker"]}>
-              <DatePicker label="Select a Start Date" value={gameDate} onChange={handleGameDateChange}/>
+              <DatePicker
+                label="Select a Start Date"
+                value={gameDate}
+                onChange={handleGameDateChange}
+                defaultValue={today}
+                minDate={today}
+              />
             </DemoContainer>
           </LocalizationProvider>
         </form>
       </div>
-      <StartGameButton gameName={gameName} gameDate={gameDate} userId={userId}/>
+      <div className="game-buttons-container">
+        <StartGameButton gameName={gameName} gameDate={gameDate} userId={userId}/>
+        <CancelGameButton />
+      </div>
     </div>
   );
 }

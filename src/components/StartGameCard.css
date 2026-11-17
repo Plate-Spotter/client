@@ -5,3 +5,11 @@
   justify-content: center;
   height: 100vh;
 }
+
+.game-buttons-container {
+  display: flex;
+  flex-direction: column; /* Stack buttons vertically */
+  align-items: center; /* Center buttons horizontally */
+  gap: 100px; /* Add space between buttons */
+  margin-top: 20px; /* Adjust spacing from content above */
+}
